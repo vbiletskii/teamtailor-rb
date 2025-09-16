@@ -5,7 +5,7 @@ RSpec.describe Teamtailor::Error do
     subject(:error) { described_class.from_response(body: body, status: status) }
 
     let(:error_detail) { "Something went wrong" }
-    let(:body) { { errors: [{ detail: error_detail }] }.to_json }
+    let(:body) { {errors: [{detail: error_detail}]}.to_json }
 
     context "when status is 401" do
       let(:status) { 401 }
@@ -80,7 +80,7 @@ RSpec.describe Teamtailor::Error do
 
     context "when body has a different error structure" do
       let(:status) { 422 }
-      let(:body) { { errors: { detail: "Another error" } }.to_json }
+      let(:body) { {errors: {detail: "Another error"}}.to_json }
 
       it "uses the alternative error detail" do
         expect(error.message).to eq("Another error")
@@ -92,7 +92,7 @@ RSpec.describe Teamtailor::Error do
     subject(:parsed) { described_class.parse_body(body) }
 
     context "with valid JSON" do
-      let(:body) { { test: "ok" }.to_json }
+      let(:body) { {test: "ok"}.to_json }
 
       it "parses and returns the hash" do
         expect(parsed).to eq("test" => "ok")
